@@ -20,42 +20,58 @@ gpgcheck=1
 enabled=1
 gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc
 ```
+Para no tener que copiarlo a mano, el fichero se ha subido al repositorio de Git. En el escenario de prácticas, bastará con copiarlo:
+```
+cp /root/curso-mongodb/Practicas/Instalacion/mongodb-org-4.2.repo /etc/yum.repos.d/mongodb-org-4.2.repo
+```
 
+Nos aseguramos de que el repositorio está correctamente configurado con ```yum repolist```
+
+
+---
 
 # Comandos y queries Mongo Shell
 
 TODO
 
+---
+
 # Replica Set
 
 TODO
+
+---
 
 # Sharding
 
 TODO
 
+---
+
 # Desarrollo con MongoDB
 
 TODO
+
+---
 
 # Pipeline de agregación
 
 ## Zips
 
-1. Obtener las ciudades con una población superior a 10000
-2. Obtener los resultados de la consulta anterior ordenados de mayor a menor, y que sólo tengan un campo personalizado llamado “población” (en castellano)
-3. Queremos los estados con una población superior a 10 millones
-4. Queremos la población media de las ciudades de cada estado
-5. Queremos las ciudades más grandes y más pequeñas por estado
+### 1. Obtener las ciudades con una población superior a 10000
+### 2. Obtener los resultados de la consulta anterior ordenados de mayor a menor, y que sólo tengan un campo personalizado llamado “población” (en castellano)
+### 3. Queremos los estados con una población superior a 10 millones
+### 4. Queremos la población media de las ciudades de cada estado
+### 5. Queremos las ciudades más grandes y más pequeñas por estado
 
 
 ## Students
 
-1. Calcular la media de edad de todos los estudiantes
-2. Calcular la media de edad por cada nacionalidad
-3. Calcular la media de las notas (ponderando por igual cada tipo de calificación)
-4. Consideremos que sólo aprueban los alumnos que tienen más de 70 puntos en la tarea (“homework”): De los alumnos que aprueban, calcular la media de las notas del examen
-5. Para cada rango de 2 años en el intervalo [20, 30), obtener un documento con un array de las nacionalidades presentes
+### 1. Calcular la media de edad de todos los estudiantes
+### 2. Calcular la media de edad por cada nacionalidad
+### 3. Calcular la media de las notas (ponderando por igual cada tipo de calificación)
+### 4. Consideremos que sólo aprueban los alumnos que tienen más de 70 puntos en la tarea (“homework”): De los alumnos que aprueban, calcular la media de las notas del examen
+### 5. Para cada rango de 2 años en el intervalo [20, 30), obtener un documento con un array de las nacionalidades presentes
 ```javaScript
   db.students.aggregate(  [
     {
@@ -72,11 +88,13 @@ TODO
   ])
 ```
 
+---
+
 # MapReduce
 
 ## students
 
-1. Calcular la media de las notas por cada nacionalidad. Guardar los resultados en una nueva colección, o bien sacarlos a la consola.
+### 1. Calcular la media de las notas por cada nacionalidad. Guardar los resultados en una nueva colección, o bien sacarlos a la consola.
 
 # ¡¡PENDIENTE PROBAR EN LOCAL!!
 
