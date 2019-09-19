@@ -13,10 +13,9 @@ Datos de la máquina virtual:
   Usuario: vagrant
   Contraseña: vagrant
 
-El usuario "vagrant" tiene permisos de superusuario, por lo que se pueden ejecutar las instrucciones que lo necesiten utilizando "sudo". Por ejemplo:
- sudo cat /etc/passwd
-Otra opción es saltar al usuario "root" usando "sudo":
- sudo su -
+  Superusuario: root
+  Contraseña: vagrant
+
 
 ## Requisitos para hacer las prácticas
 Durante el desarrollo del curso, el material de prácticas estará preinstalado en los ordenadores corporativos.
