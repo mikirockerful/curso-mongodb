@@ -8,14 +8,14 @@ Referencia: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-red-hat/
 
 Los pasos a seguir son los siguientes:
 
-### 0. Nos aseguramos de que la máquina tiene conexión a Internet, y tiene configurados y en ejecución los servicios de DNS y NTP.
+#### 0. Nos aseguramos de que la máquina tiene conexión a Internet, y tiene configurados y en ejecución los servicios de DNS y NTP.
 Por ejemplo, podemos comprobarlo con estos comandos:
 ```
 ping 1.1.1.1
 ping www.mongodb.com
 chronyc tracking
 ```
-### 1. Configuramos el sistema de gestión de paquetes YUM para añadir un nuevo repositorio, donde están los paquetes de MongoDB 4.2.
+#### 1. Configuramos el sistema de gestión de paquetes YUM para añadir un nuevo repositorio, donde están los paquetes de MongoDB 4.2.
 Para ello, crearemos el fichero `/etc/yum.repos.d/mongodb-org-4.2.repo` con el siguiente contenido:
 ```bash
 [mongodb-org-4.2]
@@ -32,22 +32,52 @@ cp /root/curso-mongodb/Practicas/Instalacion/mongodb-org-4.2.repo /etc/yum.repos
 
 Nos aseguramos de que el repositorio está correctamente configurado con ```yum repolist```
 
-### 2. Instalamos los paquetes de mongodb
+#### 2. Instalamos los paquetes de mongodb
 ```bash
 yum install mongodb-org
 ```
-Nos listará las dependencias y el espacio ocupado. **¿Qué paquetes se han instalado?**
-Confirmamos la instalación.
+Nos listará las dependencias y el espacio ocupado. Confirmamos la instalación.
+
+**¿Qué paquetes se han instalado?**
 
 ¡Listo! Ya tenemos MongoDB instalado. Lo podemos comprobar ejecutando la shell con el comando ```mongo```. Eso sí, todavía no tenemos ninguna base de datos levantada, por lo que el comando dará error de conexión.
 
-### 3. Configuración de la instancia
+#### 3. Configuración de la instancia
 Al haber instalado MongoDB a través del gestor de paquetes, viene ya con cierta configuración creada por defecto. La revisaremos con: ```cat /etc/mongod.conf```
+
 **¿En qué puerto escucha el proceso mongod?**
+
 **¿En qué interfaz o interfaces escucha?**
+
 **¿En qué directorio se van a guardar los datos?**
 
+Ahora arrancaremos el proceso mongod. Podríamos arrancarlo con la opción ```--config```, pasándole el fichero de parámetros. Sin embargo en este caso, al haber hecho la instalación a través de Yum, tenemos ya configurado mongod como servicio de systemd. De esta forma, dejaremos que sea el sistema operativo quien administre el proceso mongod como un daemon de sistema, simplificando y uniformizando dicha administración.
 
+Por tanto, arrancamos el servicio con:
+```
+systemctl start mongod
+```
+
+Y comprobamos que arranca, revisando el estado del servicio:
+```
+systemctl status mongod
+```
+Y buscando en el log la línea que indica que el demonio está arriba y esperando conexiones (```I NETWORK [initandlisten] waiting for connections on ...```). **Ayuda**: El fichero de log se define en ```/etc/mongod.conf```.
+
+### 4. Prueba de conexión a la base de datos
+Nos conectamos a la base de datos con: ```mongo```, obteniendo una shell. Este comando se conecta por defecto a la interfaz de loopback de la máquina en que se ejecuta (127.0.0.1), puerto 27017.
+
+Cerramos la shell con ```quit()```.
+
+#### Configuración adicional
+Comprobemos qué ocurre con la base de datos si reiniciamos el servidor:
+```
+reboot
+```
+
+**¿En qué estado está el proceso mongod?**
+
+En un entorno de producción, esto no es deseable. Normalmente querremos que la base de datos arranque con el sistema sin necesidad de intervención manual. Para ello, systemd resulta especialmente útil: simplemente lanzamos el comando ```systemctl enable mongod```, que nos indicará que se ha instalado el script de arranque. Podemos volver a reiniciar el servidor y comprobaremos que ahora, mongod arranca automáticamente.
 
 ---
 
@@ -79,20 +109,20 @@ TODO
 
 ## Zips
 
-### 1. Obtener las ciudades con una población superior a 10000
-### 2. Obtener los resultados de la consulta anterior ordenados de mayor a menor, y que sólo tengan un campo personalizado llamado “población” (en castellano)
-### 3. Queremos los estados con una población superior a 10 millones
-### 4. Queremos la población media de las ciudades de cada estado
-### 5. Queremos las ciudades más grandes y más pequeñas por estado
+#### 1. Obtener las ciudades con una población superior a 10000
+#### 2. Obtener los resultados de la consulta anterior ordenados de mayor a menor, y que sólo tengan un campo personalizado llamado “población” (en castellano)
+#### 3. Queremos los estados con una población superior a 10 millones
+#### 4. Queremos la población media de las ciudades de cada estado
+#### 5. Queremos las ciudades más grandes y más pequeñas por estado
 
 
 ## Students
 
-### 1. Calcular la media de edad de todos los estudiantes
-### 2. Calcular la media de edad por cada nacionalidad
-### 3. Calcular la media de las notas (ponderando por igual cada tipo de calificación)
-### 4. Consideremos que sólo aprueban los alumnos que tienen más de 70 puntos en la tarea (“homework”): De los alumnos que aprueban, calcular la media de las notas del examen
-### 5. Para cada rango de 2 años en el intervalo [20, 30), obtener un documento con un array de las nacionalidades presentes
+#### 1. Calcular la media de edad de todos los estudiantes
+#### 2. Calcular la media de edad por cada nacionalidad
+#### 3. Calcular la media de las notas (ponderando por igual cada tipo de calificación)
+#### 4. Consideremos que sólo aprueban los alumnos que tienen más de 70 puntos en la tarea (“homework”): De los alumnos que aprueban, calcular la media de las notas del examen
+#### 5. Para cada rango de 2 años en el intervalo [20, 30), obtener un documento con un array de las nacionalidades presentes
 ```javaScript
   db.students.aggregate(  [
     {
@@ -115,7 +145,7 @@ TODO
 
 ## students
 
-### 1. Calcular la media de las notas por cada nacionalidad. Guardar los resultados en una nueva colección, o bien sacarlos a la consola.
+#### 1. Calcular la media de las notas por cada nacionalidad. Guardar los resultados en una nueva colección, o bien sacarlos a la consola.
 
 # ¡¡PENDIENTE PROBAR EN LOCAL!!
 
