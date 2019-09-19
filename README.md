@@ -2,6 +2,10 @@
 
 En este repositorio se puede encontrar todo lo necesario para reproducir las prácticas del curso de MongoDB.
 
+En el aula, el repo ha sido clonado en el directorio raíz del usuario ```root```. Se puede reproducir en otro equipo con ```git clone https://github.com/mikirockerful/curso-mongodb.git```.
+
+Para actualizar el repositorio, entramos a la carpeta correspondiente con ```cd /root/curso-mongodb/``` y ejecutamos ```git pull```.
+
 ## Descripción del entorno de laboratorio
 Las prácticas se basan en una máquina virtual Linux CentOS 7 de 64 bits, que irá evolucionando durante el curso.
 

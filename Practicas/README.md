@@ -2,17 +2,22 @@
 
 Instalaremos Mongo 4.2 en la máquina virtual CentOS 7 del laboratorio.
 
-Partimos de la instantánea "0 - Estado incial". Los pasos a seguir son los siguientes:
+Partimos de la instantánea "0 - Estado incial".
 
-0. Nos aseguramos de que la máquina tiene conexión a Internet, y tiene configurados y en ejecución los servicios de DNS y NTP. Por ejemplo, podemos comprobarlo con estos comandos:
+Referencia: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-red-hat/
+
+Los pasos a seguir son los siguientes:
+
+### 0. Nos aseguramos de que la máquina tiene conexión a Internet, y tiene configurados y en ejecución los servicios de DNS y NTP.
+Por ejemplo, podemos comprobarlo con estos comandos:
 ```
 ping 1.1.1.1
 ping www.mongodb.com
 chronyc tracking
 ```
-1. Configuramos el sistema de gestión de paquetes YUM para añadir un nuevo repositorio, donde están los paquetes de MongoDB 4.2.
+### 1. Configuramos el sistema de gestión de paquetes YUM para añadir un nuevo repositorio, donde están los paquetes de MongoDB 4.2.
 Para ello, crearemos el fichero `/etc/yum.repos.d/mongodb-org-4.2.repo` con el siguiente contenido:
-```shell
+```bash
 [mongodb-org-4.2]
 name=MongoDB Repository
 baseurl=https://repo.mongodb.org/yum/redhat/7/mongodb-org/4.2/x86_64/
@@ -26,6 +31,22 @@ cp /root/curso-mongodb/Practicas/Instalacion/mongodb-org-4.2.repo /etc/yum.repos
 ```
 
 Nos aseguramos de que el repositorio está correctamente configurado con ```yum repolist```
+
+### 2. Instalamos los paquetes de mongodb
+```bash
+yum install mongodb-org
+```
+Nos listará las dependencias y el espacio ocupado. **¿Qué paquetes se han instalado?**
+Confirmamos la instalación.
+
+¡Listo! Ya tenemos MongoDB instalado. Lo podemos comprobar ejecutando la shell con el comando ```mongo```. Eso sí, todavía no tenemos ninguna base de datos levantada, por lo que el comando dará error de conexión.
+
+### 3. Configuración de la instancia
+Al haber instalado MongoDB a través del gestor de paquetes, viene ya con cierta configuración creada por defecto. La revisaremos con: ```cat /etc/mongod.conf```
+**¿En qué puerto escucha el proceso mongod?**
+**¿En qué interfaz o interfaces escucha?**
+**¿En qué directorio se van a guardar los datos?**
+
 
 
 ---
