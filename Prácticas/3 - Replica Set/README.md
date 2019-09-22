@@ -5,9 +5,9 @@ systemctl disable mongod
 mkdir -p /data/rscurso_1
 mkdir -p /data/rscurso_2
 mkdir -p /data/rscurso_3
-mongod --config "/root/curso-mongodb/Practicas/Replica Set/rscurso1.conf"
-mongod --config "/root/curso-mongodb/Practicas/Replica Set/rscurso2.conf"
-mongod --config "/root/curso-mongodb/Practicas/Replica Set/rscurso3.conf"
+mongod --config "/root/curso-mongodb/Prácticas/3 - Replica Set/rscurso1.conf"
+mongod --config "/root/curso-mongodb/Prácticas/3 - Replica Set/rscurso2.conf"
+mongod --config "/root/curso-mongodb/Prácticas/3 - Replica Set/rscurso3.conf"
 ```
 
 ```

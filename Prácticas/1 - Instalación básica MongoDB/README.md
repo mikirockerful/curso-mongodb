@@ -30,7 +30,7 @@ gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc
 ```
 Para no tener que copiarlo a mano, el fichero se ha subido al repositorio de Git. En el escenario de prácticas, bastará con copiarlo:
 ```
-cp /root/curso-mongodb/Practicas/Instalacion/mongodb-org-4.2.repo /etc/yum.repos.d/mongodb-org-4.2.repo
+cp "/root/curso-mongodb/Prácticas/1 - Instalación básica MongoDB/mongodb-org-4.2.repo" /etc/yum.repos.d/mongodb-org-4.2.repo
 ```
 
 Nos aseguramos de que el repositorio está correctamente configurado con ```yum repolist```
