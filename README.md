@@ -14,19 +14,17 @@ Para evitar que problemas en una práctica supongan la imposibilidad de seguir e
 Esto significa que se puede experimentar libremente sin miedo a "romper" el escenario de prácticas.
 
 Datos de la máquina virtual:
-  Usuario: vagrant
-  Contraseña: vagrant
 
-  Superusuario: root
-  Contraseña: vagrant
+* Superusuario: root
+*  Contraseña: vagrant
 
 
 ## Requisitos para hacer las prácticas
-Durante el desarrollo del curso, el material de prácticas estará preinstalado en los ordenadores corporativos.
+Durante el desarrollo del curso, el material de prácticas estará preinstalado en los ordenadores del aula.
 
 Para poder hacer las prácticas en otro ordenador, es necesario instalar:
 * Oracle virtualbox: https://www.virtualbox.org/ -> Es el hipervisor, software que ejecuta las máquinas virtuales
 * Vagrant: https://www.vagrantup.com/ -> Para la provision automática de las máquinas virtuales
 
 Opcionalmente:
-* Docker: https://www.docker.com/ -> Para practicar la combinación de Docker y MongoDB
+* Docker: https://www.docker.com/ -> Para el uso de MongoDB en Docker

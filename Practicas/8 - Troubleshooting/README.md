@@ -1,0 +1,2 @@
+# Diagnóstico y troubleshooting
+ TODO
