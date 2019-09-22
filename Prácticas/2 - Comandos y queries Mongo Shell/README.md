@@ -98,6 +98,8 @@ Los campos "\_id" y "age" son numéricos, "name" y "nationality" son strings y e
 
 A continuación se plantean una serie de ejercicios, el objetivo es escribir una consulta que permita obtener lo que se pide. Es importante al menos intentar crear la consulta antes de ver el resultado de cada pregunta.
 
+### Read: Leer documentos
+
 #### 1. Obtener todos los documentos de la colección de estudiantes
 <details>
 <summary>Ver respuesta</summary>
@@ -633,6 +635,265 @@ db.students.remove({
  name: "prueba"
 })
 ```
+
+### Create: Crear documentos
+
+#### 1. Insertar un nuevo estudiante en la colección
+
+Insertaremos este estudiante:
+
+```js
+{
+  "_id": 300,
+  "name": "Arthur Dent",
+  "scores": [{
+      "score": 62.20457822364115,
+      "type": "exam"
+    },
+    {
+      "score": 61.03733414415722,
+      "type": "quiz"
+    },
+    {
+      "score": 82.41688205392703,
+      "type": "homework"
+    }
+  ],
+  "age": 38,
+  "nationality": "english"
+}
+```
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.insert({
+  "_id": 300,
+  "name": "Arthur Dent",
+  "scores": [{
+      "score": 62.20457822364115,
+      "type": "exam"
+    },
+    {
+      "score": 61.03733414415722,
+      "type": "quiz"
+    },
+    {
+      "score": 82.41688205392703,
+      "type": "homework"
+    }
+  ],
+  "age": 38,
+  "nationality": "english"
+})
+```
+
+</p>
+</details>
+
+### Delete: Borrar documentos
+
+#### 1. Borrar todos los documentos correspondientes a estudiantes españoles
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.remove({
+  "nationality": "spanish"
+})
+```
+Podemos hacer un "find" para verificar que se han borrado.
+
+</p>
+</details>
+
+Por defecto, remove() borra todos los documentos que cumplen la condición. Si no le ponemos condiciones, **borraremos todos los documentos de la colección**. Se haría así: ```db.students.remove({})```
+
+Recuerda que las operaciones no son reversibles, no existen los conceptos de "commit" y "rollback" en la shell de MongoDB.
+
+
+#### 2. Borrar un único documento (cualquiera) con una nota en el examen menor de 50
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.remove({
+  scores: {
+    $elemMatch: {
+      type: "exam",
+      score: {
+        $lt: 50
+      }
+    }
+  }
+}, {
+  justOne: true
+})
+```
+
+</p>
+</details>
+
+### Update: Actualizar documentos
+
+#### 1. Cambiar el nombre de "Gennie Ratner" a "Gennie Smith"
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.update({
+  name: "Gennie Ratner"
+}, {
+  "$set": {
+    name: "Gennie Smith"
+  }
+})
+```
+
+</p>
+</details>
+
+#### 2. Incrementar la edad de "Lucinda Vanderburg" en 1 año
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.update({
+  name: "Lucinda Vanderburg"
+}, {
+  "$inc": {
+    age: 1
+  }
+})
+```
+
+</p>
+</details>
+
+#### 3. Cambiar la nacionalidad de todos los italianos para que pasen a ser belgas ("belgian")
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.update({
+  nationality: "italian"
+  }, {
+  "$set": {
+    nationality: "belgian"
+    }
+  }, {
+  multi: true
+})
+```
+
+</p>
+</details>
+
+#### 4. Cambiar el documento de "Flora Duell" por este otro
+```js
+{
+        "_id" : 109,
+        "name" : "Flora Duell",
+        "scores" : [
+                {
+                        "score" : 60.68238966626067,
+                        "type" : "exam"
+                },
+                {
+                        "score" : 32.77972040308903,
+                        "type" : "quiz"
+                },
+                {
+                        "score" : 85.732755740408484,
+                        "type" : "homework"
+                }
+        ],
+        "age" : 19,
+        "nationality" : "french"
+}
+```
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.update({
+  name: "Flora Duell"
+}, {
+  "_id": 109,
+  "name": "Flora Duell",
+  "scores": [{
+      "score": 60.68238966626067,
+      "type": "exam"
+    },
+    {
+      "score": 32.77972040308903,
+      "type": "quiz"
+    },
+    {
+      "score": 85.732755740408484,
+      "type": "homework"
+    }
+  ],
+  "age": 19,
+  "nationality": "french"
+})
+```
+
+</p>
+</details>
+
+#### 5. Suponiendo que "Rosana Vales" no existiese, ¿Cómo podríamos hacer para que en ese caso, el nuevo documento simplemente se hubiese insertado?
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.update({
+  name: "Flora Duell"
+}, {
+  "_id": 109,
+  "name": "Flora Duell",
+  "scores": [{
+      "score": 60.68238966626067,
+      "type": "exam"
+    },
+    {
+      "score": 32.77972040308903,
+      "type": "quiz"
+    },
+    {
+      "score": 85.732755740408484,
+      "type": "homework"
+    }
+  ],
+  "age": 19,
+  "nationality": "french"
+}, {
+  upsert: true
+})
+```
+
+La clave es la opción **upsert**, que hace que si ningún documento cumple con los criterios de la consulta, el nuevo documento se inserta igualmente. Podemos comprobarlo lanzando la misma consulta para un nombre que no exista. Será necesario especificar un nuevo valor para el campo "\_id", porque es un índice único. Si no lo hacemos, la inserción fallará.
+
+</p>
+</details>
+
+
 
 
 ---
