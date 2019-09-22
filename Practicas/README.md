@@ -266,7 +266,21 @@ db.students.find({
 
 #### 5. Contar el número de estudiantes entre 20 y 25 años
 
+<details>
+<summary>Ver respuesta</summary>
+<p>
 
+```js
+db.students.find({
+  age: {
+    $gte: 20,
+    $lte: 25
+  }
+}).count()
+```
+
+</p>
+</details>  
 
 
 
@@ -353,7 +367,360 @@ db.students.find().sort({
 </details>
 
 
+#### 11. Obtener los estudiantes que sacaron más de 70 puntos en el examen
+**Nota**: No se puede confiar en que las calificaciones aparezcan siempre en el mismo orden en el array "scores". Es decir, el examen no tiene por qué ir en primer lugar.
 
+<details>
+<summary>Ver pista</summary>
+<p>
+El operador [$elemMatch](https://docs.mongodb.com/manual/reference/operator/query/elemMatch/) hace match con los documentos que contienen un campo array con al menos un elemento que cumpla con todos los criterios especificados.
+</p>
+</details>
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.find({
+  scores: {
+    $elemMatch: {
+      type: "exam",
+      score: {
+        $gt: 70
+      }
+    }
+  }
+})
+```
+
+</p>
+</details>
+
+#### 12. Obtener los estudiantes que sacaron más de 30 puntos en la calificación que aparezca en primer lugar en el array scores (sea la que sea)
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.find({
+  "scores.0.score": {
+    $gt: 30
+  }
+})
+```
+
+Recordar que para utilizar la notación con el punto, es obligatorio utilizar comillas para la clave.
+
+</p>
+</details>
+
+#### 13. Obtener los estudiantes que sacaron más de 70 puntos en el examen y más de 50 en la tarea ("homework")
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.find({
+  $and: [{
+    scores: {
+      $elemMatch: {
+        type: "exam",
+        score: {
+          $gt: 70
+        }
+      }
+    }
+  }, {
+    scores: {
+      $elemMatch: {
+        type: "homework",
+        score: {
+          $gt: 50
+        }
+      }
+    }
+  }]
+})
+```
+
+</p>
+</details>
+
+#### 14. Obtener los estudiantes que cumplen con cualquiera de las siguientes afirmaciones:
+* Sacaron más de 70 puntos en el examen y más de 50 en la tarea ("homework")
+* Son franceses
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.find({
+  $or: [{
+    $and: [{
+      scores: {
+        $elemMatch: {
+          type: "exam",
+          score: {
+            $gt: 70
+          }
+        }
+      }
+    }, {
+      scores: {
+        $elemMatch: {
+          type: "homework",
+          score: {
+            $gt: 50
+          }
+        }
+      }
+    }]
+  }, {
+    nationality: "french"
+  }]
+})
+```
+
+</p>
+</details>
+
+#### 15. Obtener los estudiantes que no entregaron la tarea
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.find({
+  "scores": {
+    $not: {
+      $elemMatch: {
+        type: "exam"
+      }
+    }
+  }
+})
+```
+
+No hay ninguno, con lo que es difícil comprobar si la query está bien. Podemos probar a insertar un estudiante sin examen, y comprobar la consulta. Por ejemplo:
+
+```js
+db.students.insert({
+  "_id": 300,
+  "name": "Maren Scheider",
+  "scores": [{
+    "score": 77.28263690107663,
+    "type": "quiz"
+  }, {
+    "score": 59.46326216544371,
+    "type": "homework"
+  }],
+  "age": 19,
+  "nationality": "english"
+})
+```
+Y veremos que este resultado se devuelve correctamente.
+
+Otra alternativa correcta para la query sería esta:
+```js
+db.students.find({
+  "scores.type": {$ne: "exam"}
+  })
+```
+Que se basa en buscar dentro de un campo embebido en un array de documentos sin conocer el índice del documento que buscamos. Esta forma de búsqueda está descrita [aquí](https://docs.mongodb.com/manual/tutorial/query-array-of-documents/#specify-a-query-condition-on-a-field-embedded-in-an-array-of-documents)
+
+</p>
+</details>
+
+#### 16. Obtener los estudiantes que sean de alguna de estas nacionalidades: ["german", "italian", "french"]
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.find({
+  "nationality": {
+    $in: ["german", "italian", "french"]
+  }
+})
+```
+
+</p>
+</details>
+
+#### 17. Obtener los estudiantes que no sean de ninguna de estas nacionalidades: ["german", "italian", "french"]
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.find({
+  "nationality": {
+    $nin: ["german", "italian", "french"]
+  }
+})
+```
+
+</p>
+</details>
+
+#### 18. Comprobar si hay algún estudiante cuyo campo "\_id" no sea de tipo "number"
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.find({
+  "_id": {
+    $not: {
+      $type: "number"
+    }
+  }
+})
+```
+
+De nuevo, la respuesta es cero así que es difícil de probar. Vamos a introducir un documento sin campo "\_id" para que Mongo le cree automáticamente el campo de tipo ObjectId y así poder comprobar la consulta:
+
+```js
+db.students.insert({
+  name: "prueba"
+})
+```
+
+Veremos que la consulta nos devuelve este documento.
+
+</p>
+</details>
+
+#### 19. Comprobar si hay algún estudiante que no tenga el campo "age"
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.find({
+  "age": {
+      $exists: false
+    }
+})
+```
+
+No hay ninguno en la colección original, podemos volver a utilizar el documento de prueba.
+
+</p>
+</details>
+
+#### 20. Obtener los estudiantes cuya edad sea múltiplo de 5
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.find({
+  age: {
+    $mod: [5, 0]
+  }
+})
+```
+
+</p>
+</details>
+
+#### 21. Obtener los estudiantes que no tienen exactamente tres entregas en el array "scores"
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.find({
+  scores: {
+    $not: {
+      $size: 3
+    }
+  }
+})
+```
+
+No hay ninguno en la colección original, podemos volver a utilizar el documento de prueba.
+
+
+</p>
+</details>
+
+
+
+#### 22. Obtener los estudiantes cuyo nombre tenga 5 letras y su apellido también.
+<details>
+<summary>Ver pista</summary>
+<p>
+Ayuda: La expresión regular para un string que empieza con una palabra de 5 caracteres seguida de otra palabra de 5 caracteres es: /^[A-Za-z]{5} [A-Za-z]{5}/
+</p>
+</details>
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.find({
+  name: {$regex: /^[A-Za-z]{5} [A-Za-z]{5}/}
+})
+```
+
+</p>
+</details>
+
+#### 23. Sacar en mayúsculas el nombre y apellidos de los estudiantes que cumplan con las mismas condiciones que en la pregunta anterior. Los documentos resultado no deben tener ningún campo más.
+
+<details>
+<summary>Ver pista</summary>
+<p>
+No hay ninguna función en el lenguaje de consultas CRUD de MongoDB para transformar los resultados. La solución requiere usar la función toUpperCase() de JavaScript. Ejemplo de uso:
+
+```js
+"alphabet".toUpperCase() //"ALPHABET"
+```
+
+**Nota**: Existe un toUpper(), pero pertenece al framework de agregación que veremos más adelante.
+
+</p>
+</details>
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.find({
+  name: {
+    $regex: /^[A-Za-z]{5} [A-Za-z]{5}/
+  }
+}).forEach(function(myDoc) {
+  print(myDoc.name.toUpperCase())
+})
+```
+
+</p>
+</details>
+
+
+Si hemos insertado el documento de prueba, lo borramos para continuar con las prácticas:
+
+```js
+db.students.remove({
+ name: "prueba"
+})
+```
 
 
 ---
