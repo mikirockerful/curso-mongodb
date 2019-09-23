@@ -587,7 +587,7 @@ Ayuda: La expresión regular para un string que empieza con una palabra de 5 car
 
 ```js
 db.students.find({
-  name: {$regex: /^[A-Za-z]{5} [A-Za-z]{5}/}
+  name: {$regex: /^[A-Za-z]{5} [A-Za-z]{5}$/}
 })
 ```
 
@@ -617,7 +617,7 @@ No hay ninguna función en el lenguaje de consultas CRUD de MongoDB para transfo
 ```js
 db.students.find({
   name: {
-    $regex: /^[A-Za-z]{5} [A-Za-z]{5}/
+    $regex: /^[A-Za-z]{5} [A-Za-z]{5}$/
   }
 }).forEach(function(myDoc) {
   print(myDoc.name.toUpperCase())
