@@ -404,22 +404,6 @@ db.students.find({
 
 #### 15. Obtener los estudiantes que no entregaron la tarea
 
-<details>
-<summary>Ver respuesta</summary>
-<p>
-
-```js
-db.students.find({
-  "scores": {
-    $not: {
-      $elemMatch: {
-        type: "exam"
-      }
-    }
-  }
-})
-```
-
 No hay ninguno, con lo que es difícil comprobar si la query está bien. Podemos probar a insertar un estudiante sin examen, y comprobar la consulta. Por ejemplo:
 
 ```js
@@ -437,7 +421,22 @@ db.students.insert({
   "nationality": "english"
 })
 ```
-Y veremos que este resultado se devuelve correctamente.
+
+<details>
+<summary>Ver respuesta</summary>
+<p>
+
+```js
+db.students.find({
+  "scores": {
+    $not: {
+      $elemMatch: {
+        type: "exam"
+      }
+    }
+  }
+})
+```
 
 Otra alternativa correcta para la query sería esta:
 ```js
@@ -485,6 +484,13 @@ db.students.find({
 </details>
 
 #### 18. Comprobar si hay algún estudiante cuyo campo "\_id" no sea de tipo "number"
+De nuevo, la respuesta es cero así que es difícil de probar. Vamos a introducir un documento sin campo "\_id" para que Mongo le cree automáticamente el campo de tipo ObjectId y así poder comprobar la consulta:
+
+```js
+db.students.insert({
+  name: "prueba"
+})
+```
 
 <details>
 <summary>Ver respuesta</summary>
@@ -500,20 +506,11 @@ db.students.find({
 })
 ```
 
-De nuevo, la respuesta es cero así que es difícil de probar. Vamos a introducir un documento sin campo "\_id" para que Mongo le cree automáticamente el campo de tipo ObjectId y así poder comprobar la consulta:
-
-```js
-db.students.insert({
-  name: "prueba"
-})
-```
-
-Veremos que la consulta nos devuelve este documento.
-
 </p>
 </details>
 
 #### 19. Comprobar si hay algún estudiante que no tenga el campo "age"
+No hay ninguno en la colección original, podemos volver a utilizar el documento de prueba.
 
 <details>
 <summary>Ver respuesta</summary>
@@ -527,7 +524,6 @@ db.students.find({
 })
 ```
 
-No hay ninguno en la colección original, podemos volver a utilizar el documento de prueba.
 
 </p>
 </details>
@@ -550,6 +546,7 @@ db.students.find({
 </details>
 
 #### 21. Obtener los estudiantes que no tienen exactamente tres entregas en el array "scores"
+No hay ninguno en la colección original, podemos volver a utilizar el documento de prueba.
 
 <details>
 <summary>Ver respuesta</summary>
@@ -564,9 +561,6 @@ db.students.find({
   }
 })
 ```
-
-No hay ninguno en la colección original, podemos volver a utilizar el documento de prueba.
-
 
 </p>
 </details>
