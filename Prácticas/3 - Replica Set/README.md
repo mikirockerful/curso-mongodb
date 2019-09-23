@@ -69,6 +69,11 @@ Comprobamos que realmente se están ejecutando tres instancias de "mongod" en nu
 ps -ef | grep mongod
 ```
 
+También podemos ver si los puertos correspondientes están a la escucha:
+```bash
+ss -lnt
+```
+
 **¿Con qué usuario se están ejecutando los procesos "mongod"?**
 <details>
 <summary>Ver respuesta</summary>
@@ -243,7 +248,7 @@ Comprobamos que se elige otro nodo primario con ```rs.status()```.
 </p>
 </details>
 
-**Apagado del Replica Set**
+## Apagado del Replica Set
 
 Entrar al nodo 1, y hacer:
 ```
