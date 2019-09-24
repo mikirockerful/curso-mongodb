@@ -4,7 +4,10 @@
 
 #### 1. Calcular la media de las notas por cada nacionalidad. Guardar los resultados en una nueva colección, o bien sacarlos a la consola.
 
-# ¡¡PENDIENTE PROBAR EN LOCAL!!
+<details>
+<summary>Ver solución</summary>
+<p>
+
 
 Con funciones anónimas:
 
@@ -18,7 +21,9 @@ db.students.mapReduce(
     emit(this.nationality, totalScore)
   },
   function(key, values) {
-    return Array.average( values )
+    sum = values.reduce((previous, current) => current += previous);
+    avg = sum / values.length;
+    return avg;
   },
   { out: { inline: 1 }}
 )
@@ -36,7 +41,9 @@ var calculateStudentScores = function() {
 }
 
 var averageValuesArray = function(key, values) {
-  return Array.average(values)
+  sum = values.reduce((previous, current) => current += previous);
+  avg = sum / values.length;
+  return avg;
 }
 
 
@@ -50,4 +57,8 @@ db.students.mapReduce(
   }
 )
 ```
+
+</p>
+</details>
+
 ---
