@@ -22,8 +22,7 @@ class Student(Document):
 
 if __name__ == "__main__":
 
-    # Completar como corresponda
-    MONGO_STUDENTS_DB_URI=""
+    MONGO_STUDENTS_DB_URI="mongodb://localhost/students"
 
     connect(host=MONGO_STUDENTS_DB_URI)
 
