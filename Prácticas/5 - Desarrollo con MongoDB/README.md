@@ -166,16 +166,19 @@ Para tratar este problema en una aplicación real, debería añadir control de e
 #### 4. Modificar el script para añadir un método que imprima por pantalla cuántos años tiene el coche.
 
 Ayuda: Para obtener el año actual en Python, usaremos el módulo ```datetime```. Hay que incluir la importación correspondiente al inicio del script:
+
 ```python
 import datetime
 ```
 Y sacar el año como número entero cuando lo necesitemos con:
+
 ```python
 año = datetime.datetime.now().year
 ```
 <details>
 <summary>Ver solución</summary>
 <p>
+
 ```python
 from mongoengine import *
 import random
@@ -206,6 +209,7 @@ mi_coche.save()
 </details>
 
 #### 5. Ejecutar el script y comprobar si en la Mongo se ha guardado el código del método que acabamos de crear.
+
 <details>
 <summary>Ver respuesta</summary>
 <p>
