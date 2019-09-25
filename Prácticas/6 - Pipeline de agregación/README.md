@@ -101,7 +101,7 @@ db.zips.aggregate([{
     $group: {
       _id: {
         estado: "$state",
-        ciudad: "city"
+        ciudad: "$city"
       },
       poblacion: {
         $sum: "$pop"
