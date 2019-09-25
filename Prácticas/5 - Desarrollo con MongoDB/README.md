@@ -175,6 +175,7 @@ Y sacar el año como número entero cuando lo necesitemos con:
 ```python
 año = datetime.datetime.now().year
 ```
+
 <details>
 <summary>Ver solución</summary>
 <p>
@@ -205,6 +206,7 @@ mi_coche.imprimir_edad()
 
 mi_coche.save()
 ```
+
 </p>
 </details>
 
