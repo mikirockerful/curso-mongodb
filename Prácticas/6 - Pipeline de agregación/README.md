@@ -308,7 +308,7 @@ db.students.aggregate([{
     $match: {
       scores: {
         $elemMatch: {
-          type: "exam",
+          type: "homework",
           score: {
             $gt: 70
           }
