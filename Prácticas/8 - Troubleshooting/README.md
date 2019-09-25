@@ -14,6 +14,14 @@
 
 #### 7. Probar mongoreplay: capturar algunas queries sobre la base de datos, levantar una instancia de mongo en el puerto 27018 y lanzar esas queries contra la nueva instancia.
 
+Veremos que mongoreplay no está instalado. En el issue [SERVER-39595](https://jira.mongodb.org/browse/SERVER-39595) del issue tracker de Jira de MongoDB se explica por qué motivos ya no se instala mongoreplay cuando se instala Mongo usando el gestor de paquetes Yum.
+
+Para poder hacer este ejercicio, habrá que instalar mongoreplay descargando el paquete "tar.gz" (TGZ) para RHEL 7.0 (es equivalente a CentOS 7) desde el [MongoDB Download Center](https://www.mongodb.com/download-center/community?jmp=docs). A fecha de septiembre 2019, este paquete sí que contiene mongoreplay. Para descomprimirlo desde la línea de comandos:
+
+```bash
+tar -zxvf mongodb-linux-x86_64-rhel70-4.2.0.tgz
+```
+
 Ayuda para levantar la nueva instancia:
 ```
 mkdir -p /data/troubleshooting
