@@ -173,9 +173,11 @@ Y sacar el año como número entero cuando lo necesitemos con:
 ```python
 año = datetime.datetime.now().year
 ```
+
 <details>
 <summary>Ver solución</summary>
 <p>
+    
 ```python
 from mongoengine import *
 import random
@@ -202,10 +204,12 @@ mi_coche.imprimir_edad()
 
 mi_coche.save()
 ```
+
 </p>
 </details>
 
 #### 5. Ejecutar el script y comprobar si en la Mongo se ha guardado el código del método que acabamos de crear.
+
 <details>
 <summary>Ver respuesta</summary>
 <p>
